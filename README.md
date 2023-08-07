@@ -3,21 +3,21 @@ Magnum Tour
 
 This example goes through creating a magnum cluster using Terraform and connecting to it. We assume the existence of a template created by your OpenStack operator.
 
-Next we give you an overview of what to expect from the default template offered on IRIS Scientific OpenStack clouds. This includes looking at the built in monitoring and load balancing.
+Next we give you an overview of the built-in monitoring and load balancing.
 
 Finally we look at exposing servers via ingress.
 
 Install dependencies
 --------------------
 
-First ensure you have a working OpenStack CLI environment, that includes both python-openstackclient and python-magnumclient. This needs to be run on a Linux environment (such as Windows WSL) that has access to the OpenStack APIs. For IRIS at Cambridge, the APIs have public IP addresses, so you can run this on any Linux box with access to the internet:
+First ensure you have a working OpenStack CLI environment, that includes both python-openstackclient and python-magnumclient. This needs to be run on a Linux environment (such as Windows WSL) that has access to the OpenStack APIs.
 
     virtualenv ~/.venv
     . ~/.venv/bin/activate
     pip install -U pip
     pip install -U python-openstackclient python-magnumclient python-octaviaclient
 
-To access Kubernetes, you will need to install `kubectl` on a machine that will have access to the Kubernetes API. Using the default templates at Cambridge IRIS the Kubernetes API is accessed via a public IP address: <https://kubernetes.io/docs/tasks/tools/install-kubectl/>
+To access Kubernetes, you will need to install `kubectl` on a machine that will have access to the Kubernetes API. 
 
     curl -LO https://storage.googleapis.com/kubernetes-release/release/`curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt`/bin/linux/amd64/kubectl
     chmod +x ./kubectl
@@ -47,7 +47,7 @@ Creating a Kubernetes cluster
 
 While you can create your cluster via the Horizon web interface for OpenStack, we recommend using Terraform to create, resize and destroy your k8s clusters. In this repo we include an example Terraform module to make it easier for you to try using Magnum.
 
-To access OpenStack APIs using the CLI you can create application credentials using OpenStack Horizon (ensuring to click the button marked as dangerous to allow magnum to create credentials that are passed to Kubernetes) that are downloaded as a clouds.yaml file. For more details please see: <https://rse-cambridge.github.io/iris-openstack/cambridge> and: <https://docs.openstack.org/python-openstackclient/latest/configuration/index.html>
+To access OpenStack APIs using the CLI you can create application credentials using OpenStack Horizon (ensuring to click the button marked as dangerous to allow magnum to create credentials that are passed to Kubernetes) that are downloaded as a clouds.yaml file. For more details please see: <https://docs.openstack.org/python-openstackclient/latest/configuration/index.html>
 
 To check you have the CLI working, do something like this to test the CLI is working correctly:
 
@@ -97,7 +97,7 @@ In a similar way you can access the prometheus console and node exporter:
 Cluster Networking Overview
 ---------------------------
 
-To see how Magnum sits in your OpenStack project's networking, have a look at your network topology, after having created a Kubernetes cluster using Magnum: <https://cumulus.openstack.hpc.cam.ac.uk/project/network_topology/>
+To see how Magnum sits in your OpenStack project's networking, have a look at your network topology in Horizon, after having created a Kubernetes cluster using Magnum.
 
 Magnum generates a configuration file that tells `kubectl` where to access the Kubernetes API. Typically the API is exposed via an OpenStack Octavia load balancer, that has a public IP address assigned from the Magnum external network. Note the master node also makes use of an etcd loadbalancer to allow for a multi-master setup.
 
