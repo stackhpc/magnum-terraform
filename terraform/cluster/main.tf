@@ -22,6 +22,8 @@ resource "openstack_containerinfra_cluster_v1" "cluster" {
 
   master_count = var.master_count
   node_count   = var.node_count
+  create_timeout = 60
+  floating_ip_enabled = "true" 
 
   keypair       = openstack_compute_keypair_v2.keypair.id
   flavor        = var.flavor_name
@@ -29,9 +31,9 @@ resource "openstack_containerinfra_cluster_v1" "cluster" {
 
   labels = merge(data.openstack_containerinfra_clustertemplate_v1.clustertemplate.labels,
     {
-      min_node_count         = var.node_count
-      max_node_count         = var.max_node_count
       extra_network          = var.extra_network
+      auto_healing_enabled   = "False"
+      availability_zone      = "nova" 
   })
 }
 
